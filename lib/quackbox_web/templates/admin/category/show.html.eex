@@ -1,0 +1,41 @@
+<section class="container">
+  <div class="row mb-4">
+    <div class="col-sm">
+      <%= link "Back to Categories", to: Routes.admin_category_path(@conn, :index), class: "btn btn-outline-secondary" %>
+    </div>
+    <div class="col-sm">
+      <%= link "Delete", to: Routes.admin_category_path(@conn, :delete, @category), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-outline-danger float-right ml-3" %>
+      <%= link "Edit Category", to: Routes.admin_category_path(@conn, :edit, @category), class: "btn btn-primary float-right" %>
+    </div>
+  </div>
+
+  <h1 class="display-4">
+    <%= @category.name %>
+  </h1>
+  <p class="lead text-muted mb-5">Created <%= time_ago_in_words(@category.inserted_at) %></p>
+
+  <h4>
+    Questions
+  </h4>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Prompt</th>
+        <th>Truth</th>
+        <th>Our Lie</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for question <- @category.questions do %>
+        <tr>
+          <td><%= link question.prompt, to: Routes.admin_question_path(@conn, :show, question) %></td>
+          <td><%= question.truth %></td>
+          <td><%= question.lie %></td>
+          <td><%= time_ago_in_words(question.inserted_at) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

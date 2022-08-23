@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h1>
+        Questions 
+      </h1>
+    </div>
+
+    <div class="col-sm">
+      <%= link "New Question", to: Routes.admin_question_path(@conn, :new), class: "btn btn-primary float-right" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Prompt</th>
+            <th>Truth</th>
+            <th>Our Lie</th>
+            <th>Category</th>
+            <th>Created</th>
+
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= for question <- @questions do %>
+            <tr>
+              <td><%= link question.prompt, to: Routes.admin_question_path(@conn, :show, question) %></td>
+              <td><%= question.truth %></td>
+              <td><%= question.lie %></td>
+              <td><%= link question.category.name, to: Routes.admin_category_path(@conn, :show, question.category) %></td>
+              <td><%= time_ago_in_words(question.inserted_at) %></td>
+
+              <td>
+                <span>
+                  <%= link "Edit", to: Routes.admin_question_path(@conn, :edit, question) %>
+                </span>
+                <span class="ml-3">
+                  <%= link "Delete", to: Routes.admin_question_path(@conn, :delete, question), method: :delete, data: [confirm: "Are you sure you want to delete this question?"] %>
+                </span>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
