@@ -23,13 +23,13 @@ services:
       - /app/assets/node_modules
   
   postgres:
-    image: postgres
+        db:
+    image: postgres:9.6-alpine
     environment:
-      POSTGRES_USER: ${PG_USER}
-      POSTGRES_PASSWORD: ${PG_PWD}
-      POSTGRES_DB: ${PG_DB}
-      PG_DATA: /var/lib/postgresql/data/pgdata
-      POOL: 100
+        POSTGRES_DB: "db"
+        POSTGRES_HOST_AUTH_METHOD: "trust"
+        PG_DATA: /var/lib/postgresql/data/pgdata
+        POOL: 100
     restart: always
     ports:
       - 15432:5432
